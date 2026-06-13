@@ -4,7 +4,15 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-export default function ClientLayout({ children }: { children: React.ReactNode }) {
+export async function generateStaticParams() {
+  return [{ locale: 'zh' }, { locale: 'en' }];
+}
+
+export default function LocaleLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <ThemeProvider>
       <LangProvider>
@@ -12,7 +20,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
-          {/* Fixed theme switcher */}
           <div className="fixed bottom-4 right-4 z-40">
             <ThemeSwitcher />
           </div>

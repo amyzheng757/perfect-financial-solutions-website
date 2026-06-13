@@ -514,8 +514,3 @@ const en: SiteContent = {
 };
 
 export const content: Record<Lang, SiteContent> = { zh, en };
-
-export function getLangFromPath(pathname: string): Lang {
-  if (pathname.startsWith('/en')) return 'en';
-  return 'zh';
-}

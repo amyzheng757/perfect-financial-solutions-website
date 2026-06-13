@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function Footer() {
   const { lang } = useLang();
   const t = content[lang];
-  const langPrefix = lang === 'en' ? '/en' : '';
+  const prefix = `/${lang}`;
 
   const serviceLinks = [
     { label: t.nav.canadaHR, href: '/services/canada-hr-payroll' },
@@ -43,22 +43,22 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href={langPrefix + '/'} className="text-white/70 hover:text-white text-sm transition-colors">
+                <Link href={prefix + '/'} className="text-white/70 hover:text-white text-sm transition-colors">
                   {t.nav.home}
                 </Link>
               </li>
               <li>
-                <Link href={langPrefix + '/services'} className="text-white/70 hover:text-white text-sm transition-colors">
+                <Link href={prefix + '/services'} className="text-white/70 hover:text-white text-sm transition-colors">
                   {t.nav.services}
                 </Link>
               </li>
               <li>
-                <Link href={langPrefix + '/about'} className="text-white/70 hover:text-white text-sm transition-colors">
+                <Link href={prefix + '/about'} className="text-white/70 hover:text-white text-sm transition-colors">
                   {t.nav.about}
                 </Link>
               </li>
               <li>
-                <Link href={langPrefix + '/contact'} className="text-white/70 hover:text-white text-sm transition-colors">
+                <Link href={prefix + '/contact'} className="text-white/70 hover:text-white text-sm transition-colors">
                   {t.nav.contact}
                 </Link>
               </li>
@@ -73,7 +73,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {serviceLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={langPrefix + link.href} className="text-white/70 hover:text-white text-sm transition-colors">
+                  <Link href={prefix + link.href} className="text-white/70 hover:text-white text-sm transition-colors">
                     {link.label}
                   </Link>
                 </li>

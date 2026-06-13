@@ -3,10 +3,9 @@
 import React from 'react';
 import { useLang } from '@/lib/LangContext';
 import { content } from '@/lib/i18n';
-import Link from 'next/link';
 import CTASection from '@/components/sections/CTASection';
 
-export default function EnAboutPage() {
+export default function AboutPage() {
   const { lang } = useLang();
   const t = content[lang].about;
 
@@ -20,6 +19,7 @@ export default function EnAboutPage() {
           </div>
         </div>
       </section>
+
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-gray-900 text-center mb-10">
@@ -27,17 +27,25 @@ export default function EnAboutPage() {
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {t.perfectCompanies.map((company, i) => (
-              <div key={i} className="bg-[var(--color-surface-alt)] rounded-xl p-6 border border-[var(--color-border)] text-center hover:shadow-md transition-shadow">
+              <div
+                key={i}
+                className="bg-[var(--color-surface-alt)] rounded-xl p-6 border border-[var(--color-border)] text-center hover:shadow-md transition-shadow"
+              >
                 <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-[var(--color-primary-bg)] flex items-center justify-center">
-                  <span className="text-sm font-bold text-[var(--color-primary)]">{company.name.charAt(0)}</span>
+                  <span className="text-sm font-bold text-[var(--color-primary)]">
+                    {company.name.charAt(0)}
+                  </span>
                 </div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2 leading-snug">{company.name}</h3>
+                <h3 className="text-sm font-semibold text-gray-900 mb-2 leading-snug">
+                  {company.name}
+                </h3>
                 <p className="text-xs text-gray-500 leading-relaxed">{company.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
       <section className="py-16 lg:py-24 bg-[var(--color-surface-alt)]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="w-12 h-12 mx-auto mb-6 rounded-xl bg-[var(--color-primary)] flex items-center justify-center">
@@ -48,9 +56,12 @@ export default function EnAboutPage() {
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
             {lang === 'zh' ? '我们的使命' : 'Our Mission'}
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed italic">"{t.mission}"</p>
+          <p className="text-lg text-gray-600 leading-relaxed italic">
+            &ldquo;{t.mission}&rdquo;
+          </p>
         </div>
       </section>
+
       <CTASection />
     </>
   );

@@ -6,10 +6,10 @@ import { content } from '@/lib/i18n';
 import Link from 'next/link';
 import CTASection from '@/components/sections/CTASection';
 
-export default function EnServicesPage() {
+export default function ServicesPage() {
   const { lang } = useLang();
   const t = content[lang].servicesPage;
-  const langPrefix = lang === 'en' ? '/en' : '';
+  const prefix = `/${lang}`;
 
   return (
     <>
@@ -21,13 +21,14 @@ export default function EnServicesPage() {
           </div>
         </div>
       </section>
+
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {t.services.map((service, i) => (
               <Link
                 key={i}
-                href={langPrefix + service.href}
+                href={prefix + service.href}
                 className="group bg-[var(--color-surface-alt)] rounded-xl p-6 border border-[var(--color-border)] hover:border-[var(--color-primary)] hover:shadow-lg transition-all"
               >
                 <div className="w-10 h-10 rounded-lg bg-[var(--color-primary-bg)] flex items-center justify-center mb-4 group-hover:bg-[var(--color-primary)] transition-colors">
@@ -46,10 +47,11 @@ export default function EnServicesPage() {
               </Link>
             ))}
           </div>
+
           <div className="text-center mt-12">
             <p className="text-gray-600 mb-6">{t.cta}</p>
             <Link
-              href={langPrefix + '/contact'}
+              href={prefix + '/contact'}
               className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-lg transition-colors shadow-sm"
             >
               {lang === 'zh' ? '预约咨询' : 'Book a Consultation'}
@@ -57,6 +59,7 @@ export default function EnServicesPage() {
           </div>
         </div>
       </section>
+
       <CTASection />
     </>
   );

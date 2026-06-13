@@ -13,11 +13,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const langPrefix = lang === 'en' ? '/en' : '';
+  const prefix = `/${lang}`;
 
   const isActive = (href: string) => {
-    const fullPath = langPrefix + href;
-    if (href === '/') return pathname === langPrefix || pathname === langPrefix + '/';
+    const fullPath = prefix + href;
+    if (href === '/') return pathname === prefix || pathname === prefix + '/';
     return pathname.startsWith(fullPath);
   };
 
@@ -41,7 +41,7 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href={langPrefix + '/'} className="flex items-center gap-2 shrink-0">
+          <Link href={prefix + '/'} className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 rounded-lg bg-[var(--color-primary)] flex items-center justify-center">
               <span className="text-white font-bold text-sm">P</span>
             </div>
@@ -56,7 +56,7 @@ export default function Navbar() {
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-6">
             {navItems.map((item) => (
-              <Link key={item.href} href={langPrefix + item.href} className={linkClass(item.href)}>
+              <Link key={item.href} href={prefix + item.href} className={linkClass(item.href)}>
                 {item.label}
               </Link>
             ))}
@@ -72,7 +72,7 @@ export default function Navbar() {
               {lang === 'zh' ? 'EN' : '中文'}
             </button>
             <Link
-              href={langPrefix + '/contact'}
+              href={prefix + '/contact'}
               className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-lg transition-colors"
             >
               {t.nav.bookConsultation}
@@ -101,7 +101,7 @@ export default function Navbar() {
               {navItems.map((item) => (
                 <Link
                   key={item.href}
-                  href={langPrefix + item.href}
+                  href={prefix + item.href}
                   onClick={() => setMobileOpen(false)}
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive(item.href)
@@ -113,7 +113,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                href={langPrefix + '/contact'}
+                href={prefix + '/contact'}
                 onClick={() => setMobileOpen(false)}
                 className="mx-3 mt-2 text-center px-4 py-2.5 text-sm font-medium text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-lg transition-colors"
               >

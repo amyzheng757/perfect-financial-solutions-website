@@ -16,7 +16,6 @@ export default function ContactPage() {
 
   return (
     <>
-      {/* Hero */}
       <section className="bg-gradient-to-br from-[var(--color-primary-bg)] to-white py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -26,7 +25,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Form */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           {submitted ? (

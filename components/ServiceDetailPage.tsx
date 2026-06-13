@@ -6,10 +6,12 @@ import { content } from '@/lib/i18n';
 import Link from 'next/link';
 import CTASection from '@/components/sections/CTASection';
 
-function ServiceDetailPage({ pageKey }: { pageKey: 'canadaHR' | 'usPayroll' | 'adminOutsource' | 'bookkeeping' | 'businessMarketing' }) {
+type ServicePageKey = 'canadaHR' | 'usPayroll' | 'adminOutsource' | 'bookkeeping' | 'businessMarketing';
+
+export default function ServiceDetailPage({ pageKey }: { pageKey: ServicePageKey }) {
   const { lang } = useLang();
   const t = content[lang][pageKey];
-  const langPrefix = lang === 'en' ? '/en' : '';
+  const prefix = `/${lang}`;
 
   return (
     <>
@@ -17,7 +19,7 @@ function ServiceDetailPage({ pageKey }: { pageKey: 'canadaHR' | 'usPayroll' | 'a
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <Link
-              href={langPrefix + '/services'}
+              href={prefix + '/services'}
               className="inline-flex items-center text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] mb-4 transition-colors"
             >
               <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,6 +38,7 @@ function ServiceDetailPage({ pageKey }: { pageKey: 'canadaHR' | 'usPayroll' | 'a
           <div className="grid lg:grid-cols-5 gap-12">
             <div className="lg:col-span-3">
               <p className="text-gray-600 leading-relaxed mb-10">{t.body}</p>
+
               <h2 className="text-xl font-semibold text-gray-900 mb-6">
                 {lang === 'zh' ? '我们可以协助：' : 'We can assist with:'}
               </h2>
@@ -50,6 +53,7 @@ function ServiceDetailPage({ pageKey }: { pageKey: 'canadaHR' | 'usPayroll' | 'a
                 ))}
               </div>
             </div>
+
             <div className="lg:col-span-2">
               <div className="bg-[var(--color-surface-alt)] rounded-2xl p-6 lg:p-8 border border-[var(--color-border)] sticky top-24">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
@@ -68,7 +72,7 @@ function ServiceDetailPage({ pageKey }: { pageKey: 'canadaHR' | 'usPayroll' | 'a
                   ))}
                 </ul>
                 <Link
-                  href={langPrefix + '/contact'}
+                  href={prefix + '/contact'}
                   className="block w-full text-center px-4 py-3 text-sm font-medium text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-lg transition-colors"
                 >
                   {t.cta}
@@ -78,11 +82,8 @@ function ServiceDetailPage({ pageKey }: { pageKey: 'canadaHR' | 'usPayroll' | 'a
           </div>
         </div>
       </section>
+
       <CTASection />
     </>
   );
-}
-
-export default function USPayrollPage() {
-  return <ServiceDetailPage pageKey="usPayroll" />;
 }

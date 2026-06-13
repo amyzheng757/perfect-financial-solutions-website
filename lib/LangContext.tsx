@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { Lang } from '@/lib/i18n';
-import { usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 
 interface LangContextType {
   lang: Lang;
@@ -21,29 +21,27 @@ export function useLang() {
 }
 
 export function LangProvider({ children }: { children: React.ReactNode }) {
+  const params = useParams();
   const pathname = usePathname();
   const router = useRouter();
 
-  const getLangFromCurrentPath = (): Lang => {
-    if (pathname.startsWith('/en')) return 'en';
+  const getLangFromParams = (): Lang => {
+    const locale = params?.locale as string | undefined;
+    if (locale === 'en') return 'en';
     return 'zh';
   };
 
   const [lang, setLangState] = useState<Lang>('zh');
 
   useEffect(() => {
-    setLangState(getLangFromCurrentPath());
-  }, [pathname]);
+    setLangState(getLangFromParams());
+  }, [params?.locale]);
 
   const setLang = useCallback(
     (newLang: Lang) => {
       if (newLang === lang) return;
-      let newPath = pathname;
-      if (lang === 'zh' && newLang === 'en') {
-        newPath = '/en' + (pathname === '/' ? '' : pathname);
-      } else if (lang === 'en' && newLang === 'zh') {
-        newPath = pathname.replace(/^\/en/, '') || '/';
-      }
+      // Replace the [locale] segment in the current path
+      const newPath = pathname.replace(/^\/(zh|en)/, `/${newLang}`);
       router.push(newPath);
     },
     [lang, pathname, router]

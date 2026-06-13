@@ -8,7 +8,7 @@ import PerfectCompaniesSection from '@/components/sections/PerfectCompaniesSecti
 import FAQSection from '@/components/sections/FAQSection';
 import CTASection from '@/components/sections/CTASection';
 
-export default function EnHomePage() {
+export default function HomePage() {
   return (
     <>
       <HeroSection />
