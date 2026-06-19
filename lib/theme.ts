@@ -15,6 +15,8 @@ export interface Theme {
     surface: string;
     surfaceAlt: string;
     border: string;
+    darkBg: string;
+    darkBg2: string;
   };
 }
 
@@ -24,16 +26,18 @@ export const themes: Record<ThemeId, Theme> = {
     name: 'Professional Blue',
     label: '专业蓝',
     colors: {
-      primary: '#1a365d',
-      primaryHover: '#2a4a7f',
-      primaryLight: '#2b6cb0',
-      primaryBg: '#ebf4ff',
-      secondary: '#3182ce',
-      accent: '#e2a83e',
-      accentHover: '#c98d2e',
+      primary: '#003366',
+      primaryHover: '#004080',
+      primaryLight: '#0066CC',
+      primaryBg: '#E8F1FA',
+      secondary: '#0070D2',
+      accent: '#D4A853',
+      accentHover: '#B8923A',
       surface: '#ffffff',
-      surfaceAlt: '#f7fafc',
-      border: '#e2e8f0',
+      surfaceAlt: '#F4F7FA',
+      border: '#DFE6ED',
+      darkBg: '#001A33',
+      darkBg2: '#002244',
     },
   },
   gold: {
@@ -51,6 +55,8 @@ export const themes: Record<ThemeId, Theme> = {
       surface: '#ffffff',
       surfaceAlt: '#fffbeb',
       border: '#e7e5e4',
+      darkBg: '#1c1917',
+      darkBg2: '#292524',
     },
   },
   teal: {
@@ -68,6 +74,8 @@ export const themes: Record<ThemeId, Theme> = {
       surface: '#ffffff',
       surfaceAlt: '#f0fdfa',
       border: '#ccfbf1',
+      darkBg: '#0f2e2b',
+      darkBg2: '#134e4a',
     },
   },
 };
@@ -85,5 +93,7 @@ export function getThemeCSS(theme: Theme): string {
     --color-surface: ${c.surface};
     --color-surface-alt: ${c.surfaceAlt};
     --color-border: ${c.border};
+    --color-dark-bg: ${c.darkBg};
+    --color-dark-bg2: ${c.darkBg2};
   `;
 }

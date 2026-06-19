@@ -1,23 +1,33 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLang } from '@/lib/LangContext';
 import { content } from '@/lib/i18n';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
 export default function Navbar() {
   const { lang, toggleLang } = useLang();
   const t = content[lang];
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const prefix = `/${lang}`;
+  const isHome = pathname === prefix || pathname === prefix + '/';
 
   const isActive = (href: string) => {
     const fullPath = prefix + href;
-    if (href === '/') return pathname === prefix || pathname === prefix + '/';
+    if (href === '/') return isHome;
     return pathname.startsWith(fullPath);
   };
 
@@ -29,34 +39,69 @@ export default function Navbar() {
     { label: t.nav.about, href: '/about' },
   ];
 
-  const linkClass = (href: string) =>
-    `text-sm font-medium transition-colors ${
-      isActive(href)
+  const linkClass = (href: string) => {
+    const active = isActive(href);
+    if (isHome && !scrolled) {
+      return `text-sm font-medium transition-colors ${
+        active ? 'text-white' : 'text-white/80 hover:text-white'
+      }`;
+    }
+    return `text-sm font-medium transition-colors ${
+      active
         ? 'text-[var(--color-primary)]'
         : 'text-gray-600 hover:text-[var(--color-primary)]'
     }`;
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-[var(--color-border)]">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-white/95 backdrop-blur shadow-sm border-b border-[var(--color-border)]'
+          : isHome
+            ? 'bg-transparent'
+            : 'bg-white/95 backdrop-blur border-b border-[var(--color-border)]'
+      }`}
+    >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href={prefix + '/'} className="flex items-center gap-2 shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-[var(--color-primary)] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">P</span>
+          <Link href={prefix + '/'} className="flex items-center gap-2.5 shrink-0 group">
+            <div className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+              isHome && !scrolled ? 'bg-white/20' : 'bg-[var(--color-primary)]'
+            }`}>
+              <span className={`font-bold text-base transition-colors ${
+                isHome && !scrolled ? 'text-white' : 'text-white'
+              }`}>P</span>
             </div>
             <div className="hidden sm:block">
-              <div className="text-sm font-bold text-[var(--color-primary)] leading-tight">
+              <div className={`text-sm font-bold leading-tight transition-colors ${
+                isHome && !scrolled ? 'text-white' : 'text-[var(--color-primary)]'
+              }`}>
                 Perfect Employer
               </div>
-              <div className="text-[10px] text-gray-500 leading-tight">Solutions Ltd</div>
+              <div className={`text-[10px] leading-tight transition-colors ${
+                isHome && !scrolled ? 'text-white/60' : 'text-gray-400'
+              }`}>Solutions Ltd</div>
             </div>
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
-              <Link key={item.href} href={prefix + item.href} className={linkClass(item.href)}>
+              <Link
+                key={item.href}
+                href={prefix + item.href}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  isActive(item.href)
+                    ? scrolled || !isHome
+                      ? 'bg-[var(--color-primary-bg)] text-[var(--color-primary)]'
+                      : 'bg-white/10 text-white'
+                    : scrolled || !isHome
+                      ? 'text-gray-600 hover:text-[var(--color-primary)] hover:bg-gray-50'
+                      : 'text-white/80 hover:text-white hover:bg-white/10'
+                }`}
+              >
                 {item.label}
               </Link>
             ))}
@@ -64,23 +109,40 @@ export default function Navbar() {
 
           {/* Right actions */}
           <div className="flex items-center gap-3">
+            {/* Language switcher */}
             <button
               onClick={toggleLang}
-              className="text-sm font-medium text-gray-600 hover:text-[var(--color-primary)] transition-colors px-2 py-1 rounded-md border border-gray-200 hover:border-[var(--color-primary)]"
+              className={`text-xs font-medium transition-all px-2.5 py-1.5 rounded-md border ${
+                isHome && !scrolled
+                  ? 'text-white border-white/30 hover:border-white/60 hover:bg-white/10'
+                  : 'text-gray-500 border-gray-200 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]'
+              }`}
               aria-label="Switch language"
             >
               {lang === 'zh' ? 'EN' : '中文'}
             </button>
+
+            {/* CTA Button */}
             <Link
               href={prefix + '/contact'}
-              className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-lg transition-colors"
+              className={`hidden sm:inline-flex items-center px-5 py-2.5 text-sm font-medium rounded-lg transition-all shadow-sm ${
+                isHome && !scrolled
+                  ? 'bg-white text-[var(--color-primary)] hover:bg-gray-100'
+                  : 'text-white bg-[var(--color-primary-light)] hover:bg-[var(--color-primary-hover)]'
+              }`}
             >
               {t.nav.bookConsultation}
+              <svg className="ml-1.5 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </Link>
+
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-md text-gray-600 hover:text-[var(--color-primary)]"
+              className={`lg:hidden p-2 rounded-md transition-colors ${
+                isHome && !scrolled ? 'text-white hover:bg-white/10' : 'text-gray-600 hover:text-[var(--color-primary)]'
+              }`}
               aria-label="Toggle menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,14 +158,14 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="lg:hidden py-4 border-t border-[var(--color-border)]">
-            <div className="flex flex-col gap-3">
+          <div className="lg:hidden py-4 border-t border-[var(--color-border)] bg-white">
+            <div className="flex flex-col gap-1">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={prefix + item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive(item.href)
                       ? 'bg-[var(--color-primary-bg)] text-[var(--color-primary)]'
                       : 'text-gray-600 hover:bg-gray-50'
@@ -115,7 +177,7 @@ export default function Navbar() {
               <Link
                 href={prefix + '/contact'}
                 onClick={() => setMobileOpen(false)}
-                className="mx-3 mt-2 text-center px-4 py-2.5 text-sm font-medium text-white bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] rounded-lg transition-colors"
+                className="mx-3 mt-2 text-center px-4 py-3 text-sm font-medium text-white bg-[var(--color-primary-light)] hover:bg-[var(--color-primary-hover)] rounded-lg transition-colors shadow-sm"
               >
                 {t.nav.bookConsultation}
               </Link>
