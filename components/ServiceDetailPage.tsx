@@ -16,7 +16,7 @@ export default function ServiceDetailPage({ pageKey }: { pageKey: ServicePageKey
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[var(--color-dark-bg)] via-[var(--color-primary)] to-[var(--color-primary-hover)] py-20 lg:py-28">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[var(--color-dark-bg)] via-[var(--color-primary)] to-[var(--color-primary-hover)] pt-28 pb-20 lg:pt-36 lg:pb-28">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[var(--color-primary-light)] opacity-10 blur-3xl" />
         </div>
@@ -65,7 +65,7 @@ export default function ServiceDetailPage({ pageKey }: { pageKey: ServicePageKey
             </div>
 
             <div className="lg:col-span-2">
-              <div className="bg-[var(--color-surface-alt)] rounded-2xl p-6 lg:p-8 border border-[var(--color-border)] sticky top-24">
+              <div className="bg-[var(--color-surface-alt)] rounded-2xl p-6 lg:p-8 border border-[var(--color-border)] sticky top-20">
                 <h3 className="text-lg font-bold text-gray-900 mb-5">
                   {lang === 'zh' ? '适合：' : 'Suitable for:'}
                 </h3>

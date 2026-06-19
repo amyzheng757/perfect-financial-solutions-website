@@ -12,7 +12,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[var(--color-dark-bg)] via-[var(--color-primary)] to-[var(--color-primary-hover)] py-20 lg:py-28">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[var(--color-dark-bg)] via-[var(--color-primary)] to-[var(--color-primary-hover)] pt-28 pb-20 lg:pt-36 lg:pb-28">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-[var(--color-primary-light)] opacity-10 blur-3xl" />
           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-[var(--color-accent)] opacity-10 blur-3xl" />
