@@ -66,24 +66,13 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href={prefix + '/'} className="flex items-center gap-2.5 shrink-0 group">
-            <div className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
-              isHome && !scrolled ? 'bg-white/20' : 'bg-[var(--color-primary)]'
-            }`}>
-              <span className={`font-bold text-base transition-colors ${
-                isHome && !scrolled ? 'text-white' : 'text-white'
-              }`}>P</span>
-            </div>
-            <div className="hidden sm:block">
-              <div className={`text-sm font-bold leading-tight transition-colors ${
-                isHome && !scrolled ? 'text-white' : 'text-[var(--color-primary)]'
-              }`}>
-                Perfect Employer
-              </div>
-              <div className={`text-[10px] leading-tight transition-colors ${
-                isHome && !scrolled ? 'text-white/60' : 'text-gray-400'
-              }`}>Solutions Ltd</div>
-            </div>
+          <Link href={prefix + '/'} className="flex items-center shrink-0 group">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={isHome && !scrolled ? '/logo-dark.png' : '/logo-light.png'}
+              alt={lang === 'zh' ? '博致雇主解决方案' : 'Perfect Employer Solutions'}
+              className="h-15 w-auto"
+            />
           </Link>
 
           {/* Desktop nav */}
